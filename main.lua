@@ -8,6 +8,9 @@ GRIDWIDTH, GRIDHEIGHT = 18, 10
 pieceRotation = 1
 pieceType = nil
 
+--Local Vars
+
+
 --Module Declare 
 grid = grid or require("Modules/Grid")
 local pieceStructures = require ("Modules/Pieces")
@@ -37,9 +40,16 @@ function love.keypressed(key)
     elseif key == "left" then piecesController.MovePiece(-1, 0)
 
     elseif key == "right" then piecesController.MovePiece(1, 0)
+
+    elseif key == "up" then piecesController.DropPiece()
     end
     
 end 
+
+function love.keyreleased(key)
+    if key == "down" then isMovingDown = false
+    end
+end
 
 function love.update(dt)
     piecesController.MakePieceFall(dt)

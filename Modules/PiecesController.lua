@@ -4,7 +4,6 @@ moveX = 0
 moveY = 0 
 
 local timer = 0
-
 function piecesController.RotatePiece(rotation)
    if rotation == 1 then
     local testRotation = pieceRotation + 1
@@ -30,6 +29,7 @@ end
 function piecesController.MovePiece(x, y)
     if y == 0 
     then
+
         if x > 0 then 
             local testX = moveX + 1
 
@@ -50,14 +50,26 @@ function piecesController.MovePiece(x, y)
 
         if canPieceMove(moveX, testY, pieceRotation) then
             moveY = testY
+
+        else
+            moveX = 3
+            moveY = 0
+            pieceType = 1
+            pieceRotation = 1
         end
+    end
+end
+
+function piecesController.DropPiece()
+    while canPieceMove(moveX, moveY + 1, pieceRotation) do
+        moveY = moveY + 1
     end
 end
 
 function piecesController.MakePieceFall(dt)
     timer = timer + dt
 
-    if timer >= 1.4 then
+    if timer >= 1.4 and canMoveDown == true then
         timer = 0
         piecesController.MovePiece(0 , 1)
     end
