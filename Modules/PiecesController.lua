@@ -69,7 +69,7 @@ end
 function piecesController.MakePieceFall(dt)
     timer = timer + dt
 
-    if timer >= 1.4 and canMoveDown == true then
+    if timer >= 1.4 then
         timer = 0
         piecesController.MovePiece(0 , 1)
     end
