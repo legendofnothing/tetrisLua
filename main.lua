@@ -9,7 +9,7 @@ pieceRotation = 1
 pieceType = nil
 
 --Module Declare 
-local grid = require("Modules/Grid")
+grid = grid or require("Modules/Grid")
 local pieceStructures = require ("Modules/Pieces")
 local piecesController = require ("Modules/PiecesController")
 

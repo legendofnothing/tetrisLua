@@ -1,7 +1,7 @@
 local grid = {}
 
 --Module Declare
-local pieceStructures = require "Modules/Pieces"
+local pieceStructures = pieceStructures or require "Modules/Pieces"
 local piecesController = require "Modules/PiecesController"
 
 local colors = {
@@ -58,6 +58,8 @@ function grid.Populate()
             populate[y][x] = ' '
         end
     end
+
+    populate[8][5] = "z"
 end
 
 function grid.DrawBlock(y, x, block, cellSize, distanceBetweenCells)
@@ -70,6 +72,12 @@ function grid.DrawBlock(y, x, block, cellSize, distanceBetweenCells)
     local singelGridDraw = singleGridSize - distanceBetweenCells
                 
     love.graphics.rectangle('fill', (x + 7) * singleGridSize, (y + 0.5) * singleGridSize, singelGridDraw, singelGridDraw)
+end
+
+function grid.ReturnBlankBlock(xPos, yPos)
+    if populate[xPos][yPos] ~= ' ' then return false
+    else return true
+    end
 end
 
 return grid

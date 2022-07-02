@@ -3,29 +3,87 @@ local piecesController = {}
 moveX = 0
 moveY = 0 
 
+local timer = 0
+
 function piecesController.RotatePiece(rotation)
-    pieceRotation = pieceRotation + rotation
-
-    if pieceRotation > #pieceStructures[pieceType] then
-        pieceRotation = 1
+   if rotation == 1 then
+    local testRotation = pieceRotation + 1
+    if testRotation > #pieceStructures[pieceType] then
+        testRotation = 1
     end
 
-    if pieceRotation < 1 then
-        pieceRotation = #pieceStructures[pieceType]
+    if canPieceMove(moveX, moveY, testRotation) then
+        pieceRotation = testRotation
     end
-end
+    else
+    local testRotation = pieceRotation - 1
+    if testRotation < 1 then
+        testRotation = #pieceStructures[pieceType]
+    end
+
+    if canPieceMove(moveX, moveY, testRotation) then
+        pieceRotation = testRotation
+    end
+    end
+end 
 
 function piecesController.MovePiece(x, y)
-    moveX = moveX + x
-    moveY = moveY + y
+    if y == 0 
+    then
+        if x > 0 then 
+            local testX = moveX + 1
+
+            if canPieceMove(testX, moveY, pieceRotation) then
+                moveX = testX
+            end
+
+        elseif x < 0 then 
+            local testX = moveX - 1
+
+            if canPieceMove(testX, moveY, pieceRotation) then
+                moveX = testX
+            end
+
+        end
+    else 
+        local testY = moveY + 1
+
+        if canPieceMove(moveX, testY, pieceRotation) then
+            moveY = testY
+        end
+    end
 end
 
 function piecesController.MakePieceFall(dt)
     timer = timer + dt
 
-    if timer >= 0.5 then
+    if timer >= 1.4 then
         timer = 0
         piecesController.MovePiece(0 , 1)
+    end
+end
+
+function canPieceMove(testX, testY, testRotation)
+    for y = 1, 4, 1 do
+        for x = 1, 4, 1 do
+            if pieceStructures[pieceType][testRotation][y][x] ~= ' ' and ((testX + x) < 1 or (testX + x) > GRIDHEIGHT or (testY + y) > GRIDWIDTH  or populate[testY + y][testX + x] ~= ' ') then
+                return false
+            end
+        end
+    end
+
+    return true
+end
+
+--Im really noob at high level languages so im just duplicating this from Grid.lua
+local function Populate()
+    populate = {}
+
+    for y = 1, GRIDWIDTH, 1 do
+        populate[y] = {}
+        for x = 1, GRIDHEIGHT, 1 do
+            populate[y][x] = ' '
+        end
     end
 end
 
