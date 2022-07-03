@@ -3,6 +3,8 @@ local piecesController = {}
 moveX = 0
 moveY = 0 
 
+local scoreSystem = require ("Modules/ScoreSystem")
+
 local timer = 0
 function piecesController.RotatePiece(rotation)
    if rotation == 1 then
@@ -93,14 +95,14 @@ function piecesController.MakePieceFall(dt)
                     for removeLineY = y, 2, -1 do 
                         for removeLineX = 1, 10, 1 do
                             populate[removeLineY][removeLineX] = populate[removeLineY - 1][removeLineX]
+                            AddScore(1, removeLineY)
                         end
                     end
 
                     for removeLineX = 1, 10, 1 do 
                         populate[1][removeLineX] = ' '
                     end
-                end 
-
+                end
             end
 
             piecesController.NewPiece()
