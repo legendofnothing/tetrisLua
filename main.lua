@@ -6,10 +6,10 @@ GRIDWIDTH, GRIDHEIGHT = 18, 10
 
 --Global Vars
 pieceRotation = 1
-pieceType = 1
+pieceType = 2
 
 --Local Vars
-
+local score = 0 
 
 --Module Declare 
 grid = grid or require("Modules/Grid")
@@ -32,14 +32,14 @@ end
 function love.draw()
     --Draw Grid (Height, Width, Cell Size, Distance Between Each Cells)
     grid.drawGrid(GRIDHEIGHT, GRIDWIDTH, 20, 2)    
+
+    love.graphics.print(score, 20, 250)
 end
 
 function love.keypressed(key)
     if key == 'x' then piecesController.RotatePiece(1)
 
     elseif key == 'z' then piecesController.RotatePiece(-1)
-        
-    elseif key == "down" then piecesController.MovePiece(0, 1)
 
     elseif key == "left" then piecesController.MovePiece(-1, 0)
 
@@ -57,6 +57,21 @@ end
 
 function love.update(dt)
     piecesController.MakePieceFall(dt)
+
+    score = ReturnScore()
+
+    local softdropTimer = 0
+    if love.keyboard.isDown('s') then 
+        softdropTimer = softdropTimer + (dt * 100)
+
+        if(softdropTimer >= 1.1) then 
+            softdropTimer = 1.1
+            piecesController.MovePiece(0, 1)
+        end
+
+    else softdropTimer = 0 end 
+
+
 end
 
 

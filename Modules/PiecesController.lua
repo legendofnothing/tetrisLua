@@ -52,6 +52,9 @@ function piecesController.MovePiece(x, y)
 
         if canPieceMove(moveX, testY, pieceRotation) then
             moveY = testY
+            AddPreFixScore(1)
+
+        else timer = 1.4
         end
     end
 end
@@ -60,6 +63,8 @@ function piecesController.DropPiece()
     while canPieceMove(moveX, moveY + 1, pieceRotation) do
         moveY = moveY + 1
         timer = 1.4
+
+        AddPreFixScore(2)
     end
 end
 
@@ -84,6 +89,8 @@ function piecesController.MakePieceFall(dt)
                 end
             end
 
+            local linesCleared = 0
+
             for y = 1, 18, 1 do 
                 local lineFilled = true 
 
@@ -91,11 +98,12 @@ function piecesController.MakePieceFall(dt)
                     if populate[y][x] == ' ' then lineFilled = false break end
                 end
 
-                if lineFilled == true then 
+                if lineFilled == true then
+                    linesCleared = linesCleared + 1
+
                     for removeLineY = y, 2, -1 do 
                         for removeLineX = 1, 10, 1 do
                             populate[removeLineY][removeLineX] = populate[removeLineY - 1][removeLineX]
-                            AddScore(1, removeLineY)
                         end
                     end
 
@@ -105,6 +113,7 @@ function piecesController.MakePieceFall(dt)
                 end
             end
 
+            AddScore(1, linesCleared)
             piecesController.NewPiece()
 
             if not canPieceMove(moveX, moveY, pieceRotation) then love.load() end 
@@ -127,12 +136,12 @@ function piecesController.NewSequence()
 end
 
 function piecesController.NewPiece()
-        moveX = 3
-        moveY = 0
-        pieceType = table.remove(sequence)
-        pieceRotation = 1
+    moveX = 3
+    moveY = 0
+    pieceType = table.remove(sequence)
+    pieceRotation = 1
 
-        if #sequence == 0 then piecesController.NewSequence() end 
+    if #sequence == 0 then piecesController.NewSequence() end 
 end
 
 function canPieceMove(testX, testY, testRotation)

@@ -12,6 +12,10 @@ function AddScore(level, linesCleared)
     end
 end
 
+function AddPreFixScore(amount)
+    currentScore = currentScore + amount
+end
+
 function ReturnScore()
     return currentScore
 end
