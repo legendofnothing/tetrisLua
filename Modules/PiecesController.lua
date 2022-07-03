@@ -50,9 +50,6 @@ function piecesController.MovePiece(x, y)
 
         if canPieceMove(moveX, testY, pieceRotation) then
             moveY = testY
-
-        else
-            piecesController.NewPiece()
         end
     end
 end
@@ -68,7 +65,24 @@ function piecesController.MakePieceFall(dt)
 
     if timer >= 1.4 then
         timer = 0
-        piecesController.MovePiece(0 , 1)
+
+        local testY = moveY + 1
+        
+        if canPieceMove(moveX, testY, pieceRotation) then
+            moveY = testY
+
+        else
+            for y = 1, 4, 1 do
+                for x = 1, 4, 1 do 
+
+                    local block = pieceStructures[pieceType][pieceRotation][y][x]
+
+                    if block ~= ' ' then populate[moveY + y][moveX + x] = block end
+                end
+            end
+
+            piecesController.NewPiece()
+        end
     end
 end
 

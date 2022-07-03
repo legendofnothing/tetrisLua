@@ -58,8 +58,6 @@ function grid.Populate()
             populate[y][x] = ' '
         end
     end
-
-    populate[8][5] = "z"
 end
 
 function grid.DrawBlock(y, x, block, cellSize, distanceBetweenCells)
