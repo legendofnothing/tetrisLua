@@ -28,8 +28,8 @@ function love.load()
 end
 
 function love.draw()
-        --Draw Grid (Height, Width, Cell Size, Distance Between Each Cells)
-        grid.drawGrid(GRIDHEIGHT, GRIDWIDTH, 20, 2)
+    --Draw Grid (Height, Width, Cell Size, Distance Between Each Cells)
+    grid.drawGrid(GRIDHEIGHT, GRIDWIDTH, 20, 2)
 end
 
 function love.keypressed(key)
