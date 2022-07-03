@@ -8,6 +8,9 @@ GRIDWIDTH, GRIDHEIGHT = 18, 10
 pieceRotation = 1
 pieceType = 2
 
+DELAY = 2
+LEVEL = 1
+
 --Local Vars
 local score = 0 
 
@@ -15,6 +18,7 @@ local score = 0
 grid = grid or require("Modules/Grid")
 local pieceStructures = require ("Modules/Pieces")
 local piecesController = require ("Modules/PiecesController")
+local levelSystem = require ("Modules/LevelSystem")
 
 --Love 2D Callback Functions
 function love.load()
@@ -27,6 +31,7 @@ function love.load()
     piecesController.NewPiece()
 
     OnLoadScore()
+    levelSystem.OnLevelSystemLoad()
 end
 
 function love.draw()
@@ -34,6 +39,7 @@ function love.draw()
     grid.drawGrid(GRIDHEIGHT, GRIDWIDTH, 20, 2)    
 
     love.graphics.print(score, 20, 250)
+    love.graphics.print(LEVEL, 20, 200)
 end
 
 function love.keypressed(key)
@@ -51,6 +57,8 @@ function love.keypressed(key)
 end 
 
 function love.update(dt)
+    levelSystem.IncreaseLevel()
+
     piecesController.MakePieceFall(dt)
 
     score = ReturnScore()
@@ -65,8 +73,6 @@ function love.update(dt)
         end
 
     else softdropTimer = 0 end 
-
-
 end
 
 

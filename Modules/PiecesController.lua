@@ -54,7 +54,7 @@ function piecesController.MovePiece(x, y)
             moveY = testY
             AddPreFixScore(1)
 
-        else timer = 1.4
+        else timer = DELAY
         end
     end
 end
@@ -62,7 +62,7 @@ end
 function piecesController.DropPiece()
     while canPieceMove(moveX, moveY + 1, pieceRotation) do
         moveY = moveY + 1
-        timer = 1.4
+        timer = DELAY
 
         AddPreFixScore(2)
     end
@@ -71,7 +71,7 @@ end
 function piecesController.MakePieceFall(dt)
     timer = timer + dt
 
-    if timer >= 1.4 then
+    if timer >= DELAY then
         timer = 0
 
         local testY = moveY + 1
@@ -113,7 +113,8 @@ function piecesController.MakePieceFall(dt)
                 end
             end
 
-            AddScore(1, linesCleared)
+            AddScore(LEVEL, linesCleared)
+            IncreaseLineClearedThreshold(linesCleared)
             piecesController.NewPiece()
 
             if not canPieceMove(moveX, moveY, pieceRotation) then love.load() end 
