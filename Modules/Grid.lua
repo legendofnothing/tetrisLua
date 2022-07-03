@@ -5,14 +5,14 @@ local pieceStructures = pieceStructures or require "Modules/Pieces"
 local piecesController = require "Modules/PiecesController"
 
 local colors = {
-    [' '] = {0.87, 0.87, 0.87}, --Blank Block
-    i = {0.47, 0.76, 0.94},
-    j = {0.93, 0.91, 0.42},
-    l = {0.49, 0.85, 0.76},
-    o = {0.92, 0.69, 0.47},
-    s = {0.83, 0.54, 0.93},
-    t = {0.97, 0.58, 0.77},
-    z = {0.66, 0.83, 0.46},
+    [' '] = {0.3, 0.3, 0.3}, --Blank Block
+    i = {0, 1, 1},
+    j = {0, 0, 1},
+    l = {1, 0.5, 0},
+    o = {1, 1, 0},
+    s = {0, 1, 0},
+    t = {0.5, 0, 0.5},
+    z = {1, 0, 0},
 }
 
 --Create a height x width grid with a RGBA color value
