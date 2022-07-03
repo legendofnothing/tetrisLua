@@ -57,6 +57,7 @@ end
 function piecesController.DropPiece()
     while canPieceMove(moveX, moveY + 1, pieceRotation) do
         moveY = moveY + 1
+        timer = 1.4
     end
 end
 
@@ -81,7 +82,30 @@ function piecesController.MakePieceFall(dt)
                 end
             end
 
+            for y = 1, 18, 1 do 
+                local lineFilled = true 
+
+                for x = 1, 10, 1 do
+                    if populate[y][x] == ' ' then lineFilled = false break end
+                end
+
+                if lineFilled == true then 
+                    for removeLineY = y, 2, -1 do 
+                        for removeLineX = 1, 10, 1 do
+                            populate[removeLineY][removeLineX] = populate[removeLineY - 1][removeLineX]
+                        end
+                    end
+
+                    for removeLineX = 1, 10, 1 do 
+                        populate[1][removeLineX] = ' '
+                    end
+                end 
+
+            end
+
             piecesController.NewPiece()
+
+            if not canPieceMove(moveX, moveY, pieceRotation) then love.load() end 
         end
     end
 end
