@@ -52,10 +52,7 @@ function piecesController.MovePiece(x, y)
             moveY = testY
 
         else
-            moveX = 3
-            moveY = 0
-            pieceType = 1
-            pieceRotation = 1
+            piecesController.NewPiece()
         end
     end
 end
@@ -73,6 +70,29 @@ function piecesController.MakePieceFall(dt)
         timer = 0
         piecesController.MovePiece(0 , 1)
     end
+end
+
+function piecesController.NewSequence()
+    sequence = {}
+
+    for pieceTypeIndex = 1 , #pieceStructures do
+        local position = love.math.random(#sequence + 1)
+
+        table.insert(sequence, position, pieceTypeIndex)
+
+    end
+
+    print(table.concat(sequence, ' '))
+
+end
+
+function piecesController.NewPiece()
+        moveX = 3
+        moveY = 0
+        pieceType = table.remove(sequence)
+        pieceRotation = 1
+
+        if #sequence == 0 then piecesController.NewSequence() end 
 end
 
 function canPieceMove(testX, testY, testRotation)

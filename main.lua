@@ -6,7 +6,7 @@ GRIDWIDTH, GRIDHEIGHT = 18, 10
 
 --Global Vars
 pieceRotation = 1
-pieceType = nil
+pieceType = 1
 
 --Local Vars
 
@@ -22,7 +22,9 @@ function love.load()
     love.window.setTitle("tetrisLua")
 
     grid.Populate()
-    pieceType = 1
+
+    piecesController.NewSequence()
+    piecesController.NewPiece()
 end
 
 function love.draw()
@@ -54,6 +56,7 @@ end
 function love.update(dt)
     piecesController.MakePieceFall(dt)
 end
+
 
 
 
