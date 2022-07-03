@@ -50,11 +50,6 @@ function love.keypressed(key)
     
 end 
 
-function love.keyreleased(key)
-    if key == "down" then isMovingDown = false
-    end
-end
-
 function love.update(dt)
     piecesController.MakePieceFall(dt)
 
