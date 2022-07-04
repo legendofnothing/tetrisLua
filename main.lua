@@ -61,8 +61,9 @@ function love.keypressed(key)
     
         elseif key == "up" then piecesController.DropPiece() 
 
-        elseif key == "escape" then isPausing = true end
+        elseif key == "escape" then isPausing = true
 
+        elseif key == "r" then love.load() end
     else
         if key == "escape" then isPausing = false end
     end
