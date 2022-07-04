@@ -13,6 +13,7 @@ LEVEL = 1
 
 --Local Vars
 local score = 0 
+local isPausing = false
 
 --Module Declare 
 grid = grid or require("Modules/Grid")
@@ -36,35 +37,49 @@ end
 
 function love.draw()
     --Draw Grid (Height, Width, Cell Size, Distance Between Each Cells)
-    grid.drawGrid(GRIDHEIGHT, GRIDWIDTH, 20, 2)    
+    grid.drawGrid(GRIDHEIGHT, GRIDWIDTH, 20, 1.3)    
 
-    love.graphics.print(score, 20, 250)
-    love.graphics.print(LEVEL, 20, 200)
+    love.graphics.setColor(1,1,1)
+    local scoreText = "Score - "..score
+    local levelText = "Level - "..LEVEL
+
+    love.graphics.print(scoreText, 20, 230)
+    love.graphics.print(levelText, 20, 180)
+
+    if isPausing then love.graphics.print("Paused", 20, 140) end
 end
 
 function love.keypressed(key)
-    if key == 'x' then piecesController.RotatePiece(1)
+    if isPausing == false then
+        if key == 'x' then piecesController.RotatePiece(1)
 
-    elseif key == 'z' then piecesController.RotatePiece(-1)
-
-    elseif key == "left" then piecesController.MovePiece(-1, 0)
-
-    elseif key == "right" then piecesController.MovePiece(1, 0)
-
-    elseif key == "up" then piecesController.DropPiece()
-    end
+        elseif key == 'z' then piecesController.RotatePiece(-1)
     
-end 
+        elseif key == "left" then piecesController.MovePiece(-1, 0)
+    
+        elseif key == "right" then piecesController.MovePiece(1, 0)
+    
+        elseif key == "up" then piecesController.DropPiece() 
 
+        elseif key == "escape" then isPausing = true end
+
+    else
+        if key == "escape" then isPausing = false end
+    end
+
+end
+    
 function love.update(dt)
-    levelSystem.IncreaseLevel()
 
-    piecesController.MakePieceFall(dt)
+    if isPausing == false then
+        levelSystem.IncreaseLevel()
 
-    score = ReturnScore()
+        piecesController.MakePieceFall(dt)
 
-    local softdropTimer = 0
-    if love.keyboard.isDown('s') then 
+        score = ReturnScore()
+
+        local softdropTimer = 0
+        if love.keyboard.isDown('s') then 
         softdropTimer = softdropTimer + (dt * 100)
 
         if(softdropTimer >= 1.1) then 
@@ -72,8 +87,12 @@ function love.update(dt)
             piecesController.MovePiece(0, 1)
         end
 
-    else softdropTimer = 0 end 
+        else softdropTimer = 0 end 
+
+    end
 end
+
+
 
 
 
