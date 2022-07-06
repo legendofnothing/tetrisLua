@@ -1,33 +1,38 @@
 local piecesController = {}
 
+--Global Vars
 moveX = 0
 moveY = 0 
 
+--Module Declaration
 local scoreSystem = require ("Modules/ScoreSystem")
 
+--Local Vars
 local timer = 0
+
+--Rotate Piece Function
 function piecesController.RotatePiece(rotation)
-   if rotation == 1 then
-    local testRotation = pieceRotation + 1
-    if testRotation > #pieceStructures[pieceType] then
-        testRotation = 1
-    end
+    --Rotate Right
+    if rotation == 1 then
 
-    if canPieceMove(moveX, moveY, testRotation) then
-        pieceRotation = testRotation
-    end
+        local testRotation = pieceRotation + 1
+    
+        if testRotation > #pieceStructures[pieceType] then testRotation = 1 end
+
+        if canPieceMove(moveX, moveY, testRotation) then pieceRotation = testRotation end
+
+    --Rotate Left
     else
-    local testRotation = pieceRotation - 1
-    if testRotation < 1 then
-        testRotation = #pieceStructures[pieceType]
-    end
+        
+        local testRotation = pieceRotation - 1
 
-    if canPieceMove(moveX, moveY, testRotation) then
-        pieceRotation = testRotation
-    end
+        if testRotation < 1 then testRotation = #pieceStructures[pieceType] end
+
+        if canPieceMove(moveX, moveY, testRotation) then pieceRotation = testRotation end
     end
 end 
 
+--Move Piece Function
 function piecesController.MovePiece(x, y)
     if y == 0 
     then

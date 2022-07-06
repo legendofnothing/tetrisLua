@@ -4,6 +4,7 @@ local grid = {}
 local pieceStructures = pieceStructures or require "Modules/Pieces"
 local piecesController = require "Modules/PiecesController"
 
+--Block Colors
 local colors = {
     [' '] = {0.3, 0.3, 0.3}, --Blank Block
     i = {0, 1, 1},
@@ -31,19 +32,22 @@ function grid.drawGrid(width, height, cellSize, distanceBetweenCells)
         end
     end
 
+    --Temp Draw Blocks
     for y = 1, height, 1 do
         for x = 1, width, 1 do
             grid.DrawBlock(y, x, populate[y][x], cellSize, distanceBetweenCells)
         end
     end
 
+    --Draw Playing Pieces with a 4x4 grid
     for y = 1, 4, 1 do
         for x = 1, 4, 1 do
+
+            --Piece value, takes in type of piece, rotation of peice
             local block = pieceStructures[pieceType][pieceRotation][y][x]
 
-            if block ~= ' ' then 
-            grid.DrawBlock(y + moveY, x + moveX, block, cellSize, distanceBetweenCells)
-            end
+            --If the 4x4 grid is empty then draw piece, takes in movement made by player
+            if block ~= ' ' then grid.DrawBlock(y + moveY, x + moveX, block, cellSize, distanceBetweenCells) end
         end
     end
 end
@@ -54,12 +58,12 @@ function grid.Populate()
 
     for y = 1, GRIDWIDTH, 1 do
         populate[y] = {}
-        for x = 1, GRIDHEIGHT, 1 do
-            populate[y][x] = ' '
-        end
+
+        for x = 1, GRIDHEIGHT, 1 do populate[y][x] = ' ' end
     end
 end
 
+--Draw Block
 function grid.DrawBlock(y, x, block, cellSize, distanceBetweenCells)
     local color = colors[block]
 
@@ -70,12 +74,6 @@ function grid.DrawBlock(y, x, block, cellSize, distanceBetweenCells)
     local singelGridDraw = singleGridSize - distanceBetweenCells
                 
     love.graphics.rectangle('fill', (x + 7) * singleGridSize, (y + 0.5) * singleGridSize, singelGridDraw, singelGridDraw)
-end
-
-function grid.ReturnBlankBlock(xPos, yPos)
-    if populate[xPos][yPos] ~= ' ' then return false
-    else return true
-    end
 end
 
 return grid
